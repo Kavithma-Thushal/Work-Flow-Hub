@@ -4,6 +4,7 @@ namespace App\Http\Services;
 
 use App\Enums\HttpStatus;
 use App\Models\User;
+use App\Repositories\User\UserRepositoryInterface;
 use Exception;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\DB;
@@ -11,12 +12,19 @@ use Symfony\Component\HttpKernel\Exception\HttpException;
 
 class AuthService
 {
+    protected UserRepositoryInterface $userRepositoryInterface;
+
+    public function __construct(UserRepositoryInterface $userRepositoryInterface)
+    {
+        $this->userRepositoryInterface = $userRepositoryInterface;
+    }
+
     public function register(array $data)
     {
         DB::beginTransaction();
 
         try {
-            $user = User::create([
+            $user = $this->userRepositoryInterface->save([
                 'name' => $data['name'] ?? null,
                 'email' => $data['email'],
                 'password' => Hash::make($data['password']),
@@ -35,7 +43,7 @@ class AuthService
     public function login(array $data): array
     {
         // Find user by email
-        $user = User::where('email', $data['email'])->first();
+        $user = $this->userRepositoryInterface->getByEmail($data['email']);
 
         // Check if user exists and password is valid
         if (!$user || !Hash::check($data['password'], $user->password)) {

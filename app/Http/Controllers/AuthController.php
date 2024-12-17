@@ -13,8 +13,11 @@ use Symfony\Component\HttpKernel\Exception\HttpException;
 
 class AuthController extends Controller
 {
-    public function __construct(private AuthService $authService)
+    protected AuthService $authService;
+
+    public function __construct(AuthService $authService)
     {
+        $this->authService = $authService;
     }
 
     public function register(RegisterRequest $request)
