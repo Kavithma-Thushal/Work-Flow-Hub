@@ -1,6 +1,12 @@
 <?php
 
+use App\Http\Controllers\AuthController;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\EmployeeController;
 
-Route::get('save', [EmployeeController::class, 'save']);
+Route::get('/', function () {
+    return view('welcome');
+});
+Route::prefix('v1')->group(function () {
+    Route::post('/register', [AuthController::class, 'register']);
+    Route::post('/login', [AuthController::class, 'login']);
+});
