@@ -23,25 +23,19 @@ class AuthService
     {
         DB::beginTransaction();
         try {
-            if ($data['role'] === 'company') {
-                $user = $this->userRepositoryInterface->save([
-                    'name' => $data['name'],
-                    'email' => $data['email'],
-                    'password' => Hash::make($data['password']),
-                    'role' => $data['role'],
-                ]);
+            $user = $this->userRepositoryInterface->save([
+                'name' => $data['name'],
+                'email' => $data['email'],
+                'password' => Hash::make($data['password']),
+            ]);
 
-                $user->assignRole('company');
+            $user->assignRole('company');
 
-                Company::create([
-                    'user_id' => $user->id,
-                    'name' => $data['name'],
-                    'email' => $data['email'],
-                    'password' => $user->password,
-                ]);
-            } else {
-                throw new HttpException(HttpStatus::BAD_REQUEST, 'Only companies can register');
-            }
+            Company::create([
+                'user_id' => $user->id,
+                'name' => $data['name'],
+                'email' => $data['email'],
+            ]);
             DB::commit();
             return $user;
         } catch (Exception $e) {
