@@ -14,10 +14,10 @@ return new class extends Migration {
             $table->id();
             $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
             $table->foreignId('company_id')->constrained('companies')->onDelete('cascade');
-            $table->string('position')->nullable();
-            $table->date('date_of_hire')->nullable();
-            $table->string('mobile')->nullable();
-            $table->string('address')->nullable();
+            $table->string('name');
+            $table->date('email')->unique();
+            $table->string('password');
+            $table->string('role')->nullable();
             $table->timestamps();
         });
     }
