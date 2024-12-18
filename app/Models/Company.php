@@ -9,7 +9,7 @@ class Company extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['user_id', 'name', 'email', 'address', 'website'];
+    protected $fillable = ['user_id', 'name', 'email'];
 
     /**
      * Get the user that owns the company.

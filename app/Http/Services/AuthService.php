@@ -3,7 +3,7 @@
 namespace App\Http\Services;
 
 use App\Enums\HttpStatus;
-use App\Models\User;
+use App\Models\Company;
 use App\Repositories\User\UserRepositoryInterface;
 use Exception;
 use Illuminate\Support\Facades\Hash;
@@ -22,20 +22,29 @@ class AuthService
     public function register(array $data)
     {
         DB::beginTransaction();
-
         try {
-            $user = $this->userRepositoryInterface->save([
-                'name' => $data['name'] ?? null,
-                'email' => $data['email'],
-                'password' => Hash::make($data['password']),
-                'role' => $data['role'] ?? null,
-            ]);
+            if ($data['role'] === 'company') {
+                $user = $this->userRepositoryInterface->save([
+                    'name' => $data['name'],
+                    'email' => $data['email'],
+                    'password' => Hash::make($data['password']),
+                    'role' => $data['role'],
+                ]);
 
+                Company::create([
+                    'user_id' => $user->id,
+                    'name' => $data['name'],
+                    'email' => $data['email'],
+                    'password' => $user->password,
+                ]);
+            } else {
+                throw new HttpException(HttpStatus::BAD_REQUEST, 'Only companies can register');
+            }
             DB::commit();
             return $user;
         } catch (Exception $e) {
             DB::rollBack();
-            throw new HttpException(HttpStatus::INTERNAL_SERVER_ERROR, 'User registration failed');
+            throw new HttpException(HttpStatus::INTERNAL_SERVER_ERROR, 'User registration failed: ' . $e->getMessage());
         }
     }
 
@@ -49,10 +58,12 @@ class AuthService
             throw new HttpException(HttpStatus::UNPROCESSABLE_CONTENT, 'Invalid email or password');
         }
 
-        // Generate access token
-        $token = $user->createToken('auth-token')->accessToken;
-
-        // Return user and token
-        return ['user' => $user, 'access_token' => $token];
+        // Check if the role is 'company'
+        if ($user->role === 'company') {
+            $token = $user->createToken('auth-token')->accessToken;
+            return ['user' => $user, 'access_token' => $token];
+        } else {
+            return ['user' => $user, 'access_token' => 'No Access'];
+        }
     }
 }
