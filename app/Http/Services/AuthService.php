@@ -28,8 +28,7 @@ class AuthService
                 'name' => $data['name'] ?? null,
                 'email' => $data['email'],
                 'password' => Hash::make($data['password']),
-                'address' => $data['address'] ?? null,
-                'website' => $data['website'] ?? null,
+                'role' => $data['role'] ?? null,
             ]);
 
             DB::commit();
