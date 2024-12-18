@@ -31,6 +31,8 @@ class AuthService
                     'role' => $data['role'],
                 ]);
 
+                $user->assignRole('company');
+
                 Company::create([
                     'user_id' => $user->id,
                     'name' => $data['name'],
@@ -59,7 +61,7 @@ class AuthService
         }
 
         // Check if the role is 'company'
-        if ($user->role === 'company') {
+        if ($user->hasRole('company')) {
             $token = $user->createToken('auth-token')->accessToken;
             return ['user' => $user, 'access_token' => $token];
         } else {
