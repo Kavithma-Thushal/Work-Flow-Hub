@@ -3,7 +3,6 @@
 namespace App\Http\Services;
 
 use App\Enums\HttpStatus;
-use App\Models\Company;
 use App\Repositories\Company\CompanyRepositoryInterface;
 use App\Repositories\User\UserRepositoryInterface;
 use Exception;

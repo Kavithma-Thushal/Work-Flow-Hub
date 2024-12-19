@@ -10,23 +10,11 @@ class Employee extends Model
     use HasFactory;
 
     protected $fillable = [
-        'user_id',
         'company_id',
         'name',
-        'email',
-        'password',
-        'role',
+        'address',
+        'salary',
     ];
-
-    /**
-     * Automatically hash the password before saving it to the database.
-     *
-     * @param string $value
-     */
-    public function setPasswordAttribute($value)
-    {
-        $this->attributes['password'] = bcrypt($value);
-    }
 
     /**
      * Get the user that owns the employee.
