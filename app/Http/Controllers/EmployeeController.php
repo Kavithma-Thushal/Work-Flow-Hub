@@ -47,4 +47,14 @@ class EmployeeController extends Controller
             ErrorResponse::throwException($e);
         }
     }
+
+    public function getById(int $id)
+    {
+        try {
+            $data = $this->employeeService->getById($id);
+            return new SuccessResource(['message' => 'Employee Retrieved Successfully!', 'data' => new EmployeeResource($data)]);
+        } catch (HttpException $e) {
+            ErrorResponse::throwException($e);
+        }
+    }
 }

@@ -78,4 +78,15 @@ class EmployeeService
             throw new HttpException(HttpStatus::INTERNAL_SERVER_ERROR, 'Employee delete failed: ' . $e->getMessage());
         }
     }
+
+    public function getById(int $id)
+    {
+        $employee = $this->employeeRepositoryInterface->getById($id);
+
+        if (!$employee) {
+            throw new HttpException(HttpStatus::NOT_FOUND, 'Employee not found');
+        }
+
+        return $employee;
+    }
 }

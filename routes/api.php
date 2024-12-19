@@ -13,6 +13,7 @@ Route::prefix('v1')->group(function () {
             Route::post('save', [EmployeeController::class, 'save'])->middleware('permissions:employee-save');
             Route::patch('update/{id}', [EmployeeController::class, 'update'])->middleware('permissions:employee-update');
             Route::delete('delete/{id}', [EmployeeController::class, 'delete'])->middleware('permissions:employee-delete');
+            Route::get('getById/{id}', [EmployeeController::class, 'getById'])->middleware('permissions:employee-getById');
         });
     });
 });

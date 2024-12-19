@@ -24,11 +24,10 @@ class RolePermissionSeeder extends Seeder
         $employeeSave = Permission::updateOrCreate(['name' => 'employee-save', 'guard_name' => $guard]);
         $employeeUpdate = Permission::updateOrCreate(['name' => 'employee-update', 'guard_name' => $guard]);
         $employeeDelete = Permission::updateOrCreate(['name' => 'employee-delete', 'guard_name' => $guard]);
+        $employeeGetById = Permission::updateOrCreate(['name' => 'employee-getById', 'guard_name' => $guard]);
 
         $company = Role::firstOrCreate(['name' => 'Company']);
-        $company->syncPermissions([$employeeSave, $employeeUpdate, $employeeDelete]);
-
-        $employee = Role::firstOrCreate(['name' => 'Employee']);
+        $company->syncPermissions([$employeeSave, $employeeUpdate, $employeeDelete, $employeeGetById]);
 
         Schema::enableForeignKeyConstraints();
     }
