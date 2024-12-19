@@ -51,20 +51,26 @@ class AuthService
 
     public function login(array $data): array
     {
-        // Find user by email
         $user = $this->userRepositoryInterface->getByEmail($data['email']);
 
-        // Check if user exists and password is valid
-        if (!$user || !Hash::check($data['password'], $user->password)) {
-            throw new HttpException(HttpStatus::UNPROCESSABLE_CONTENT, 'Invalid email or password');
+        // If user not found, throw an HttpException
+        if (!$user) {
+            throw new HttpException(HttpStatus::UNPROCESSABLE_CONTENT, 'Username or password invalid');
         }
 
-        // Check if the role is 'company'
-        if ($user->hasRole('company')) {
-            $token = $user->createToken('auth-token')->accessToken;
-            return ['user' => $user, 'access_token' => $token];
-        } else {
-            return ['user' => $user, 'access_token' => 'No Access'];
+        // Check if the provided password matches the hashed password
+        if (!Hash::check($data['password'], $user->password)) {
+            throw new HttpException(HttpStatus::UNPROCESSABLE_CONTENT, 'Username or password invalid');
         }
+
+        // Create a personal access token
+        $token = $user->createToken('work-flow-hub')->accessToken;
+
+        // If token creation fails, throw an error
+        if (!$token) {
+            throw new HttpException(HttpStatus::INTERNAL_SERVER_ERROR, 'User authentication failed');
+        }
+
+        return ['user' => $user, 'access_token' => $token];
     }
 }

@@ -15,20 +15,23 @@ class RolePermissionSeeder extends Seeder
      */
     public function run(): void
     {
-        // Disable foreign key constraints to prevent issues during truncation
         Schema::disableForeignKeyConstraints();
         app()[PermissionRegistrar::class]->forgetCachedPermissions();
-
-        // Truncate roles to avoid duplicates
         Permission::truncate();
 
         $guard = 'web';
 
-        // Create roles
-        Role::firstOrCreate(['name' => 'company', 'guard_name' => $guard]);
-        Role::firstOrCreate(['name' => 'employee', 'guard_name' => $guard]);
+        // Create 'employee-save' permission
+        $employeeSave = Permission::updateOrCreate(['name' => 'employee-save', 'guard_name' => $guard]);
 
-        // Re-enable foreign key constraints
+        // Create 'Company' role and assign permission
+        $company = Role::firstOrCreate(['name' => 'Company']);
+        $company->syncPermissions([$employeeSave]);
+
+        // Create 'Employee' role and assign permission
+        $employee = Role::firstOrCreate(['name' => 'Employee']);
+        $employee->syncPermissions([$employeeSave]);
+
         Schema::enableForeignKeyConstraints();
     }
 }
