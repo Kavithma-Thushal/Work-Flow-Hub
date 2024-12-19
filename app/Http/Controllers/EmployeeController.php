@@ -57,4 +57,14 @@ class EmployeeController extends Controller
             ErrorResponse::throwException($e);
         }
     }
+
+    public function getAll()
+    {
+        try {
+            $data = $this->employeeService->getAll();
+            return new SuccessResource(['message' => 'All Employees Retrieved Successfully!', 'data' => EmployeeResource::collection($data)]);
+        } catch (HttpException $e) {
+            ErrorResponse::throwException($e);
+        }
+    }
 }

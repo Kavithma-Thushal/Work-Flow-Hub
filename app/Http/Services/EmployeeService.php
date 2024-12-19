@@ -89,4 +89,9 @@ class EmployeeService
 
         return $employee;
     }
+
+    public function getAll()
+    {
+        return $this->employeeRepositoryInterface->getAll();
+    }
 }

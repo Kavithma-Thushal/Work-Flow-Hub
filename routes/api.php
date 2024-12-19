@@ -14,6 +14,7 @@ Route::prefix('v1')->group(function () {
             Route::patch('update/{id}', [EmployeeController::class, 'update'])->middleware('permissions:employee-update');
             Route::delete('delete/{id}', [EmployeeController::class, 'delete'])->middleware('permissions:employee-delete');
             Route::get('getById/{id}', [EmployeeController::class, 'getById'])->middleware('permissions:employee-getById');
+            Route::get('getAll', [EmployeeController::class, 'getAll'])->middleware('permissions:employee-getAll');
         });
     });
 });
