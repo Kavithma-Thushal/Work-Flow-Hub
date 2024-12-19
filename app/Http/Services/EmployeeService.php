@@ -58,4 +58,24 @@ class EmployeeService
             throw new HttpException(HttpStatus::INTERNAL_SERVER_ERROR, 'Employee update failed: ' . $e->getMessage());
         }
     }
+
+    public function delete(int $id)
+    {
+        DB::beginTransaction();
+        try {
+
+            $employee = $this->employeeRepositoryInterface->getById($id);
+
+            if (!$employee) {
+                throw new HttpException(HttpStatus::NOT_FOUND, 'Employee not found');
+            }
+
+            $this->employeeRepositoryInterface->delete($id);
+
+            DB::commit();
+        } catch (Exception $e) {
+            DB::rollBack();
+            throw new HttpException(HttpStatus::INTERNAL_SERVER_ERROR, 'Employee delete failed: ' . $e->getMessage());
+        }
+    }
 }

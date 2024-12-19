@@ -37,4 +37,14 @@ class EmployeeController extends Controller
             ErrorResponse::throwException($e);
         }
     }
+
+    public function delete(int $id)
+    {
+        try {
+            $this->employeeService->delete($id);
+            return new SuccessResource(['message' => 'Employee Deleted Successfully!']);
+        } catch (HttpException $e) {
+            ErrorResponse::throwException($e);
+        }
+    }
 }
