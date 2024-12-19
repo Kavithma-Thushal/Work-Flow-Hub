@@ -22,9 +22,10 @@ class RolePermissionSeeder extends Seeder
         $guard = 'web';
 
         $employeeSave = Permission::updateOrCreate(['name' => 'employee-save', 'guard_name' => $guard]);
+        $employeeUpdate = Permission::updateOrCreate(['name' => 'employee-update', 'guard_name' => $guard]);
 
         $company = Role::firstOrCreate(['name' => 'Company']);
-        $company->syncPermissions([$employeeSave]);
+        $company->syncPermissions([$employeeSave, $employeeUpdate]);
 
         $employee = Role::firstOrCreate(['name' => 'Employee']);
 

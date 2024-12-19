@@ -27,4 +27,14 @@ class EmployeeController extends Controller
             ErrorResponse::throwException($e);
         }
     }
+
+    public function update(EmployeeRequest $request, int $id)
+    {
+        try {
+            $data = $this->employeeService->update($id, $request->validated());
+            return new SuccessResource(['message' => 'Employee Updated Successfully!', 'data' => new EmployeeResource($data)]);
+        } catch (HttpException $e) {
+            ErrorResponse::throwException($e);
+        }
+    }
 }

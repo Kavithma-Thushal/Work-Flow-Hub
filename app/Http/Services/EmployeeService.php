@@ -36,4 +36,26 @@ class EmployeeService
             throw new HttpException(HttpStatus::INTERNAL_SERVER_ERROR, 'Employee save failed: ' . $e->getMessage());
         }
     }
+
+    public function update(int $id, array $data)
+    {
+        DB::beginTransaction();
+        try {
+            $employee = $this->employeeRepositoryInterface->update($id, [
+                'name' => $data['name'] ?? null,
+                'address' => $data['address'] ?? null,
+                'salary' => $data['salary'] ?? null,
+            ]);
+
+            if (!$employee) {
+                throw new HttpException(HttpStatus::NOT_FOUND, 'Employee not found');
+            }
+
+            DB::commit();
+            return $employee;
+        } catch (Exception $e) {
+            DB::rollBack();
+            throw new HttpException(HttpStatus::INTERNAL_SERVER_ERROR, 'Employee update failed: ' . $e->getMessage());
+        }
+    }
 }
