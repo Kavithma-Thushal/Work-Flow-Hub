@@ -4,6 +4,7 @@ namespace App\Http\Services;
 
 use App\Enums\HttpStatus;
 use App\Models\Company;
+use App\Repositories\Company\CompanyRepositoryInterface;
 use App\Repositories\User\UserRepositoryInterface;
 use Exception;
 use Illuminate\Support\Facades\Hash;
@@ -13,10 +14,12 @@ use Symfony\Component\HttpKernel\Exception\HttpException;
 class AuthService
 {
     protected UserRepositoryInterface $userRepositoryInterface;
+    protected CompanyRepositoryInterface $companyRepositoryInterface;
 
-    public function __construct(UserRepositoryInterface $userRepositoryInterface)
+    public function __construct(UserRepositoryInterface $userRepositoryInterface, CompanyRepositoryInterface $companyRepositoryInterface)
     {
         $this->userRepositoryInterface = $userRepositoryInterface;
+        $this->companyRepositoryInterface = $companyRepositoryInterface;
     }
 
     public function register(array $data)
@@ -31,11 +34,13 @@ class AuthService
 
             $user->assignRole('company');
 
-            Company::create([
+            $this->companyRepositoryInterface->save([
                 'user_id' => $user->id,
-                'name' => $data['name'],
-                'email' => $data['email'],
+                'registration_no' => $data['registration_no'],
+                'address' => $data['address'],
+                'mobile' => $data['mobile'],
             ]);
+
             DB::commit();
             return $user;
         } catch (Exception $e) {

@@ -9,7 +9,17 @@ class Company extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['user_id', 'name', 'email'];
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var array
+     */
+    protected $fillable = [
+        'user_id',
+        'registration_no',
+        'address',
+        'mobile',
+    ];
 
     /**
      * Get the user that owns the company.
