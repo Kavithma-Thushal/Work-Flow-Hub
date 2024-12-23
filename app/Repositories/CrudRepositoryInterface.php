@@ -2,6 +2,8 @@
 
 namespace App\Repositories;
 
+use Illuminate\Database\Eloquent\Collection;
+
 interface CrudRepositoryInterface
 {
     public function store(array $data): ?object;
@@ -12,5 +14,5 @@ interface CrudRepositoryInterface
 
     public function getById(int $id): ?object;
 
-    public function getAll(): array;
+    public function getAll(): Collection;
 }

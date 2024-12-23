@@ -2,6 +2,8 @@
 
 namespace App\Http\Services;
 
+use App\Repositories\Leave\LeaveRepositoryInterface;
+use App\Repositories\LeavePolicy\LeavePolicyRepositoryInterface;
 use Exception;
 use App\Enums\HttpStatus;
 use App\Repositories\Employee\EmployeeRepositoryInterface;
@@ -12,10 +14,14 @@ use Symfony\Component\HttpKernel\Exception\HttpException;
 class EmployeeService
 {
     protected EmployeeRepositoryInterface $employeeRepositoryInterface;
+    protected LeaveRepositoryInterface $leaveRepositoryInterface;
+    protected LeavePolicyRepositoryInterface $leavePolicyRepositoryInterface;
 
-    public function __construct(EmployeeRepositoryInterface $employeeRepositoryInterface)
+    public function __construct(EmployeeRepositoryInterface $employeeRepositoryInterface, LeaveRepositoryInterface $leaveRepositoryInterface, LeavePolicyRepositoryInterface $leavePolicyRepositoryInterface)
     {
         $this->employeeRepositoryInterface = $employeeRepositoryInterface;
+        $this->leaveRepositoryInterface = $leaveRepositoryInterface;
+        $this->leavePolicyRepositoryInterface = $leavePolicyRepositoryInterface;
     }
 
     public function store(array $data)
@@ -29,6 +35,16 @@ class EmployeeService
                 'address' => $data['address'],
                 'salary' => $data['salary'],
             ]);
+
+            $leavePolicies = $this->leavePolicyRepositoryInterface->getAll();
+            foreach ($leavePolicies as $leavePolicy) {
+                $this->leaveRepositoryInterface->store([
+                    'employee_id' => $employee->id,
+                    'leave_policy_id' => $leavePolicy->id,
+                    'taken_casual_leaves' => 0,
+                    'taken_annual_leaves' => 0,
+                ]);
+            }
 
             DB::commit();
             return $employee;

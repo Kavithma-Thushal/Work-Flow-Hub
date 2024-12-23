@@ -3,6 +3,7 @@
 namespace App\Repositories;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Collection;
 
 class CrudRepository implements CrudRepositoryInterface
 {
@@ -38,8 +39,8 @@ class CrudRepository implements CrudRepositoryInterface
         return $this->model->find($id);
     }
 
-    public function getAll(): array
+    public function getAll(): Collection
     {
-        return $this->model->all()->toArray();
+        return $this->model->all();
     }
 }
