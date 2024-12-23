@@ -20,6 +20,7 @@ Route::prefix('v1')->group(function () {
 
         Route::prefix('leave')->group(function () {
             Route::post('add', [LeaveController::class, 'add'])->middleware('permissions:leave-add');
+            Route::get('getById/{id}', [LeaveController::class, 'getById'])->middleware('permissions:leave-getById');
         });
     });
 });

@@ -51,4 +51,15 @@ class LeaveService
             throw new HttpException(HttpStatus::INTERNAL_SERVER_ERROR, 'Leave save failed: ' . $e->getMessage());
         }
     }
+
+    public function getByEmployeeId(int $id)
+    {
+        $leaves = $this->leaveRepositoryInterface->getByEmployeeId($id);
+
+        if (!$leaves) {
+            throw new HttpException(HttpStatus::NOT_FOUND, 'No leaves found for this employee');
+        }
+
+        return $leaves;
+    }
 }

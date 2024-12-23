@@ -27,4 +27,14 @@ class LeaveController extends Controller
             ErrorResponse::throwException($e);
         }
     }
+
+    public function getById(int $id)
+    {
+        try {
+            $data = $this->leaveService->getByEmployeeId($id);
+            return new SuccessResource(['message' => 'Employee Leaves Retrieved Successfully!', 'data' => LeaveResource::collection($data)]);
+        } catch (HttpException $e) {
+            ErrorResponse::throwException($e);
+        }
+    }
 }
