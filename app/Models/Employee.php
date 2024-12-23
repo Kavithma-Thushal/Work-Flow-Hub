@@ -31,4 +31,9 @@ class Employee extends Model
     {
         return $this->belongsTo(Company::class);
     }
+
+    public function leaves()
+    {
+        return $this->hasMany(Leave::class, 'employee_id');
+    }
 }
