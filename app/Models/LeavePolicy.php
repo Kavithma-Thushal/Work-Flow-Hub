@@ -10,7 +10,6 @@ class LeavePolicy extends Model
     use HasFactory;
 
     protected $fillable = [
-        'name',
         'casual_leaves',
         'annual_leaves'
     ];

@@ -12,7 +12,6 @@ return new class extends Migration {
     {
         Schema::create('leave_policies', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
             $table->integer('casual_leaves');
             $table->integer('annual_leaves');
             $table->timestamps();
