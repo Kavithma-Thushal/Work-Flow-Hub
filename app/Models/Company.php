@@ -22,11 +22,11 @@ class Company extends Model
     ];
 
     /**
-     * Get the user that owns the company.
+     * Get the user that owns the employee.
      */
     public function user()
     {
-        return $this->belongsTo(User::class);
+        return $this->hasOne(User::class);
     }
 
     /**
