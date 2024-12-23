@@ -18,11 +18,11 @@ class EmployeeController extends Controller
         $this->employeeService = $employeeService;
     }
 
-    public function save(EmployeeRequest $request)
+    public function store(EmployeeRequest $request)
     {
         try {
-            $data = $this->employeeService->save($request->validated());
-            return new SuccessResource(['message' => 'Employee Saved Successfully!', 'data' => new EmployeeResource($data)]);
+            $data = $this->employeeService->store($request->validated());
+            return new SuccessResource(['message' => 'Employee Stored Successfully!', 'data' => new EmployeeResource($data)]);
         } catch (HttpException $e) {
             ErrorResponse::throwException($e);
         }

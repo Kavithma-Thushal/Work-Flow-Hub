@@ -13,7 +13,7 @@ class CrudRepository implements CrudRepositoryInterface
         $this->model = $model;
     }
 
-    public function save(array $data): ?object
+    public function store(array $data): ?object
     {
         return $this->model->create($data);
     }

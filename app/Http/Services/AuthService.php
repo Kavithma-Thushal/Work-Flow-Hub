@@ -25,7 +25,7 @@ class AuthService
     {
         DB::beginTransaction();
         try {
-            $user = $this->userRepositoryInterface->save([
+            $user = $this->userRepositoryInterface->store([
                 'name' => $data['name'],
                 'email' => $data['email'],
                 'password' => Hash::make($data['password']),
@@ -33,7 +33,7 @@ class AuthService
 
             $user->assignRole('company');
 
-            $this->companyRepositoryInterface->save([
+            $this->companyRepositoryInterface->store([
                 'user_id' => $user->id,
                 'registration_no' => $data['registration_no'],
                 'address' => $data['address'],

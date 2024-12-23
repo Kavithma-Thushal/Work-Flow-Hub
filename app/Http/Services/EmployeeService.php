@@ -18,11 +18,11 @@ class EmployeeService
         $this->employeeRepositoryInterface = $employeeRepositoryInterface;
     }
 
-    public function save(array $data)
+    public function store(array $data)
     {
         DB::beginTransaction();
         try {
-            $employee = $this->employeeRepositoryInterface->save([
+            $employee = $this->employeeRepositoryInterface->store([
                 'company_id' => Auth::user()->id,
                 'name' => $data['name'],
                 'address' => $data['address'],
