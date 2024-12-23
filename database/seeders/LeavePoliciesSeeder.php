@@ -14,14 +14,14 @@ class LeavePoliciesSeeder extends Seeder
     {
         DB::table('leave_policies')->insert([
             [
-                'name' => 'Default Policy',
-                'casual_leaves' => 12,
+                'name' => 'Staff',
+                'casual_leaves' => 10,
                 'annual_leaves' => 15,
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
             [
-                'name' => 'Manager Policy',
+                'name' => 'Manager',
                 'casual_leaves' => 15,
                 'annual_leaves' => 20,
                 'created_at' => now(),

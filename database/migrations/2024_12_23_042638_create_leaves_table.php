@@ -16,8 +16,10 @@ return new class extends Migration {
             $table->foreign('leave_policy_id')->references('id')->on('leave_policies')->onDelete('cascade');
             $table->unsignedBigInteger('employee_id');
             $table->unsignedBigInteger('leave_policy_id');
-            $table->integer('taken_leaves')->default(0);
-            $table->integer('remaining_leaves')->default(0);
+            $table->integer('taken_casual_leaves')->default(0);
+            $table->integer('taken_annual_leaves')->default(0);
+            $table->integer('remaining_casual_leaves')->default(0);
+            $table->integer('remaining_annual_leaves')->default(0);
             $table->timestamps();
         });
     }
