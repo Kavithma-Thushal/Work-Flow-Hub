@@ -9,11 +9,6 @@ class Company extends Model
 {
     use HasFactory;
 
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var array
-     */
     protected $fillable = [
         'user_id',
         'registration_no',
@@ -21,17 +16,11 @@ class Company extends Model
         'mobile',
     ];
 
-    /**
-     * Get the user that owns the employee.
-     */
     public function user()
     {
-        return $this->hasOne(User::class);
+        return $this->belongsTo(User::class);
     }
 
-    /**
-     * Get the employees for the company.
-     */
     public function employees()
     {
         return $this->hasMany(Employee::class);

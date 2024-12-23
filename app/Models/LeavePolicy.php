@@ -9,10 +9,14 @@ class LeavePolicy extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['name', 'casual_leaves', 'annual_leaves'];
+    protected $fillable = [
+        'name',
+        'casual_leaves',
+        'annual_leaves'
+    ];
 
     public function leaves()
     {
-        return $this->hasMany(Leave::class, 'leave_policy_id');
+        return $this->hasMany(Leave::class);
     }
 }

@@ -9,15 +9,20 @@ class Leave extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['employee_id', 'leave_policy_id', 'taken_leaves', 'remaining_leaves'];
+    protected $fillable = [
+        'employee_id',
+        'leave_policy_id',
+        'taken_casual_leaves',
+        'taken_annual_leaves',
+    ];
 
     public function employee()
     {
-        return $this->belongsTo(Employee::class, 'employee_id');
+        return $this->belongsTo(Employee::class);
     }
 
     public function leavePolicy()
     {
-        return $this->belongsTo(LeavePolicy::class, 'leave_policy_id');
+        return $this->belongsTo(LeavePolicy::class);
     }
 }

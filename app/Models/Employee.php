@@ -10,23 +10,18 @@ class Employee extends Model
     use HasFactory;
 
     protected $fillable = [
+        'user_id',
         'company_id',
         'name',
         'address',
         'salary',
     ];
 
-    /**
-     * Get the user that owns the employee.
-     */
     public function user()
     {
         return $this->belongsTo(User::class);
     }
 
-    /**
-     * Get the company that owns the employee.
-     */
     public function company()
     {
         return $this->belongsTo(Company::class);
@@ -34,6 +29,6 @@ class Employee extends Model
 
     public function leaves()
     {
-        return $this->hasMany(Leave::class, 'employee_id');
+        return $this->hasMany(Leave::class);
     }
 }
