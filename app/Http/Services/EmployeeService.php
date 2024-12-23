@@ -23,6 +23,7 @@ class EmployeeService
         DB::beginTransaction();
         try {
             $employee = $this->employeeRepositoryInterface->store([
+                'user_id' => Auth::user()->id,
                 'company_id' => Auth::user()->id,
                 'name' => $data['name'],
                 'address' => $data['address'],
