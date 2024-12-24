@@ -22,7 +22,6 @@ class LeaveRequest extends FormRequest
     {
         return [
             'employee_id' => 'required|exists:employees,id',
-            'leave_policy_id' => 'required|exists:leave_policies,id',
             'annual_leaves' => 'required|numeric|min:0',
             'casual_leaves' => 'required|numeric|min:0',
         ];

@@ -27,34 +27,11 @@ class LeaveService
     {
         DB::beginTransaction();
         try {
-            // Ensure employee_id is valid
-            $employee = $this->employeeRepositoryInterface->getById($data['employee_id']);
-
-            // Ensure leave_policy_id is valid
-            $leavePolicy = $this->leavePolicyRepositoryInterface->getById($data['leave_policy_id']);
-
-            if (!$employee || !$leavePolicy) {
-                throw new HttpException(HttpStatus::NOT_FOUND, 'Employee or Leave Policy not found.');
-            }
-
-            // Check if leave already exists for this employee and leave policy
-            $leave = $this->leaveRepositoryInterface->getByEmployeeIdAndPolicyId($data['employee_id'], $data['leave_policy_id']);
-
-            if ($leave) {
-                // Update the existing leave record
-                $leave->update([
-                    'taken_casual_leaves' => $data['casual_leaves'],
-                    'taken_annual_leaves' => $data['annual_leaves'],
-                ]);
-            } else {
-                // Create a new leave record if it doesn't exist
-                $leave = $this->leaveRepositoryInterface->store([
-                    'employee_id' => $data['employee_id'],
-                    'leave_policy_id' => $data['leave_policy_id'],
-                    'taken_casual_leaves' => $data['casual_leaves'],
-                    'taken_annual_leaves' => $data['annual_leaves'],
-                ]);
-            }
+            $leave = $this->leaveRepositoryInterface->store([
+                'employee_id' => $data['employee_id'],
+                'taken_casual_leaves' => $data['casual_leaves'],
+                'taken_annual_leaves' => $data['annual_leaves'],
+            ]);
 
             DB::commit();
             return $leave;
