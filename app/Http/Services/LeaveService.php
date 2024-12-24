@@ -27,6 +27,34 @@ class LeaveService
     {
         DB::beginTransaction();
         try {
+            // Is Employee Available
+            $employee = $this->employeeRepositoryInterface->getById($data['employee_id']);
+            if (!$employee) {
+                throw new HttpException(HttpStatus::NOT_FOUND, 'Employee not found.');
+            }
+
+            // Is Leave Policy Available
+            $leavePolicy = $employee->leavePolicy;
+            if (!$leavePolicy) {
+                throw new HttpException(HttpStatus::NOT_FOUND, 'Leave policy not found for this employee.');
+            }
+
+            // Fetch the total leaves already taken by the employee
+            $totalCasualLeavesTaken = $employee->leaves->sum('taken_casual_leaves');
+            $totalAnnualLeavesTaken = $employee->leaves->sum('taken_annual_leaves');
+
+            // Check if casual and annual leaves exceed the allowed limits
+            $newTotalCasualLeaves = $totalCasualLeavesTaken + $data['casual_leaves'];
+            if ($newTotalCasualLeaves > $leavePolicy->casual_leaves) {
+                throw new HttpException(HttpStatus::BAD_REQUEST, 'Casual leaves exceeded the allowed limit.');
+            }
+
+            $newTotalAnnualLeaves = $totalAnnualLeavesTaken + $data['annual_leaves'];
+            if ($newTotalAnnualLeaves > $leavePolicy->annual_leaves) {
+                throw new HttpException(HttpStatus::BAD_REQUEST, 'Annual leaves exceeded the allowed limit.');
+            }
+
+            // Store the leave record
             $leave = $this->leaveRepositoryInterface->store([
                 'employee_id' => $data['employee_id'],
                 'taken_casual_leaves' => $data['casual_leaves'],

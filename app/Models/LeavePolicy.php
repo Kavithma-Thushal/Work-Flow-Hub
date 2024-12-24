@@ -19,4 +19,9 @@ class LeavePolicy extends Model
     {
         return $this->hasMany(Employee::class);
     }
+
+    public function leavePolicy()
+    {
+        return $this->belongsTo(LeavePolicy::class);
+    }
 }
