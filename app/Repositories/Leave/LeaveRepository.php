@@ -17,12 +17,4 @@ class LeaveRepository extends CrudRepository implements LeaveRepositoryInterface
     {
         return $this->model->where('employee_id', $id)->get();
     }
-
-    public function getByEmployeeIdAndPolicyId(int $employee_id, int $leave_policy_id): ?Leave
-    {
-        return $this->model
-            ->where('employee_id', $employee_id)
-            ->where('leave_policy_id', $leave_policy_id)
-            ->first();
-    }
 }
