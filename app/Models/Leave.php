@@ -11,7 +11,6 @@ class Leave extends Model
 
     protected $fillable = [
         'employee_id',
-        'leave_policy_id',
         'taken_casual_leaves',
         'taken_annual_leaves',
     ];
@@ -19,10 +18,5 @@ class Leave extends Model
     public function employee()
     {
         return $this->belongsTo(Employee::class);
-    }
-
-    public function leavePolicy()
-    {
-        return $this->belongsTo(LeavePolicy::class);
     }
 }

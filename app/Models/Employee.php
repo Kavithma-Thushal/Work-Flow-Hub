@@ -12,6 +12,7 @@ class Employee extends Model
     protected $fillable = [
         'user_id',
         'company_id',
+        'leave_policy_id',
         'name',
         'address',
         'salary',
@@ -25,6 +26,11 @@ class Employee extends Model
     public function company()
     {
         return $this->belongsTo(Company::class);
+    }
+
+    public function leavePolicy()
+    {
+        return $this->belongsTo(LeavePolicy::class);
     }
 
     public function leaves()

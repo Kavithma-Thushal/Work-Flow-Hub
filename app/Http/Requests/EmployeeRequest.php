@@ -24,6 +24,7 @@ class EmployeeRequest extends FormRequest
             'name' => 'required|string|max:255',
             'address' => 'required|string|max:500',
             'salary' => 'required|numeric|min:0',
+            'leave_policy_id' => 'required|exists:leave_policies,id',
         ];
     }
 }

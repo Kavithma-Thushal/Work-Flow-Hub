@@ -15,8 +15,8 @@ class LeavePolicy extends Model
         'annual_leaves'
     ];
 
-    public function leaves()
+    public function employees()
     {
-        return $this->hasMany(Leave::class);
+        return $this->hasMany(Employee::class);
     }
 }

@@ -14,6 +14,7 @@ return new class extends Migration {
             $table->id();
             $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
             $table->foreignId('company_id')->constrained('companies')->onDelete('cascade');
+            $table->foreignId('leave_policy_id')->constrained('leave_policies')->onDelete('cascade');
             $table->string('name');
             $table->string('address');
             $table->decimal('salary', 10, 2);

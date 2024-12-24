@@ -34,23 +34,14 @@ class EmployeeService
                 'name' => $data['name'],
                 'address' => $data['address'],
                 'salary' => $data['salary'],
+                'leave_policy_id' => $data['leave_policy_id'],
             ]);
-
-            $leavePolicies = $this->leavePolicyRepositoryInterface->getAll();
-            foreach ($leavePolicies as $leavePolicy) {
-                $this->leaveRepositoryInterface->store([
-                    'employee_id' => $employee->id,
-                    'leave_policy_id' => $leavePolicy->id,
-                    'taken_casual_leaves' => 0,
-                    'taken_annual_leaves' => 0,
-                ]);
-            }
 
             DB::commit();
             return $employee;
         } catch (Exception $e) {
             DB::rollBack();
-            throw new HttpException(HttpStatus::INTERNAL_SERVER_ERROR, 'Employee save failed: ' . $e->getMessage());
+            throw new HttpException(HttpStatus::INTERNAL_SERVER_ERROR, 'Employee store failed: ' . $e->getMessage());
         }
     }
 
