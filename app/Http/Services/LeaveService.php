@@ -71,12 +71,35 @@ class LeaveService
 
     public function getByEmployeeId(int $id)
     {
+        // Fetch the employee's leave records
         $leaves = $this->leaveRepositoryInterface->getByEmployeeId($id);
-
-        if (!$leaves) {
+        if ($leaves->isEmpty()) {
             throw new HttpException(HttpStatus::NOT_FOUND, 'No leaves found for this employee');
         }
 
-        return $leaves;
+        // Fetch the employee's leave policy
+        $employee = $this->employeeRepositoryInterface->getById($id);
+        if (!$employee || !$employee->leavePolicy) {
+            throw new HttpException(HttpStatus::NOT_FOUND, 'Leave policy not found for this employee');
+        }
+
+        // Calculate the total taken casual and annual leaves
+        $leavePolicy = $employee->leavePolicy;
+        $totalCasualTaken = $leaves->sum('taken_casual_leaves');
+        $totalAnnualTaken = $leaves->sum('taken_annual_leaves');
+
+        // Calculate the remaining leaves
+        $remainingCasualLeaves = max(0, $leavePolicy->casual_leaves - $totalCasualTaken);
+        $remainingAnnualLeaves = max(0, $leavePolicy->annual_leaves - $totalAnnualTaken);
+
+        // Get the first leave record
+        $firstLeaveRecord = $leaves->first();
+
+        // Attach remaining leave data to the model
+        $firstLeaveRecord->remaining_casual_leaves = $remainingCasualLeaves;
+        $firstLeaveRecord->remaining_annual_leaves = $remainingAnnualLeaves;
+
+        // Return the leave record
+        return $firstLeaveRecord;
     }
 }
