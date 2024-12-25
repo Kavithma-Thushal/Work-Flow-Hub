@@ -11,8 +11,6 @@ class LeavePolicy extends Model
 
     protected $fillable = [
         'name',
-        'casual_leaves',
-        'annual_leaves'
     ];
 
     public function employees()
@@ -20,8 +18,8 @@ class LeavePolicy extends Model
         return $this->hasMany(Employee::class);
     }
 
-    public function leavePolicy()
+    public function policyHasLeaves()
     {
-        return $this->belongsTo(LeavePolicy::class);
+        return $this->hasMany(PolicyHasLeave::class);
     }
 }

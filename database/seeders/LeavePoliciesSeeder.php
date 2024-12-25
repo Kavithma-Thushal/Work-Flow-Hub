@@ -15,15 +15,11 @@ class LeavePoliciesSeeder extends Seeder
         $policies = [
             [
                 'name' => 'Staff',
-                'casual_leaves' => 10,
-                'annual_leaves' => 15,
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
             [
                 'name' => 'Manager',
-                'casual_leaves' => 20,
-                'annual_leaves' => 25,
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
@@ -33,8 +29,6 @@ class LeavePoliciesSeeder extends Seeder
             LeavePolicy::updateOrCreate(
                 ['name' => $policy['name']],
                 [
-                    'casual_leaves' => $policy['casual_leaves'],
-                    'annual_leaves' => $policy['annual_leaves'],
                     'created_at' => $policy['created_at'],
                     'updated_at' => $policy['updated_at'],
                 ]
