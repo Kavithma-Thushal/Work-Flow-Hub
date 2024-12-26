@@ -2,7 +2,7 @@
 
 namespace App\Http\Services;
 
-use App\Repositories\Leave\LeaveRepositoryInterface;
+use App\Repositories\EmployeeLeave\EmployeeLeaveRepositoryInterface;
 use App\Repositories\LeavePolicy\LeavePolicyRepositoryInterface;
 use Exception;
 use App\Enums\HttpStatus;
@@ -14,10 +14,10 @@ use Symfony\Component\HttpKernel\Exception\HttpException;
 class EmployeeService
 {
     protected EmployeeRepositoryInterface $employeeRepositoryInterface;
-    protected LeaveRepositoryInterface $leaveRepositoryInterface;
+    protected EmployeeLeaveRepositoryInterface $leaveRepositoryInterface;
     protected LeavePolicyRepositoryInterface $leavePolicyRepositoryInterface;
 
-    public function __construct(EmployeeRepositoryInterface $employeeRepositoryInterface, LeaveRepositoryInterface $leaveRepositoryInterface, LeavePolicyRepositoryInterface $leavePolicyRepositoryInterface)
+    public function __construct(EmployeeRepositoryInterface $employeeRepositoryInterface, EmployeeLeaveRepositoryInterface $leaveRepositoryInterface, LeavePolicyRepositoryInterface $leavePolicyRepositoryInterface)
     {
         $this->employeeRepositoryInterface = $employeeRepositoryInterface;
         $this->leaveRepositoryInterface = $leaveRepositoryInterface;

@@ -3,7 +3,7 @@
 namespace App\Http\Services;
 
 use App\Models\EmployeeLeave;
-use App\Repositories\Leave\LeaveRepositoryInterface;
+use App\Repositories\EmployeeLeave\EmployeeLeaveRepositoryInterface;
 use App\Repositories\LeavePolicy\LeavePolicyRepositoryInterface;
 use Exception;
 use App\Enums\HttpStatus;
@@ -14,21 +14,21 @@ use Symfony\Component\HttpKernel\Exception\HttpException;
 class LeaveService
 {
     protected EmployeeRepositoryInterface $employeeRepositoryInterface;
-    protected LeaveRepositoryInterface $leaveRepositoryInterface;
     protected LeavePolicyRepositoryInterface $leavePolicyRepositoryInterface;
+    protected EmployeeLeaveRepositoryInterface $leaveRepositoryInterface;
 
-    public function __construct(EmployeeRepositoryInterface $employeeRepositoryInterface, LeaveRepositoryInterface $leaveRepositoryInterface, LeavePolicyRepositoryInterface $leavePolicyRepositoryInterface)
+    public function __construct(EmployeeRepositoryInterface $employeeRepositoryInterface, LeavePolicyRepositoryInterface $leavePolicyRepositoryInterface, EmployeeLeaveRepositoryInterface $leaveRepositoryInterface)
     {
         $this->employeeRepositoryInterface = $employeeRepositoryInterface;
-        $this->leaveRepositoryInterface = $leaveRepositoryInterface;
         $this->leavePolicyRepositoryInterface = $leavePolicyRepositoryInterface;
+        $this->leaveRepositoryInterface = $leaveRepositoryInterface;
     }
 
     public function store(array $data)
     {
         DB::beginTransaction();
         try {
-            $leave = EmployeeLeave::create($data);
+            $leave = $this->leaveRepositoryInterface->store($data);
             DB::commit();
             return $leave;
         } catch (Exception $e) {
