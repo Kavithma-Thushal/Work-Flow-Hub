@@ -12,6 +12,7 @@ class LeaveResource extends JsonResource
         return [
             'id' => $this->id,
             'employee_id' => $this->employee_id,
+            'leave_type_id' => $this->leave_type_id,
             'date' => $this->date,
         ];
     }

@@ -22,6 +22,7 @@ class LeaveRequest extends FormRequest
     {
         return [
             'employee_id' => 'required|exists:employees,id',
+            'leave_type_id' => 'required|exists:leave_types,id',
             'date' => 'required|date|after_or_equal:today',
         ];
     }
