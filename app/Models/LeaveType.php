@@ -11,5 +11,6 @@ class LeaveType extends Model
 
     protected $fillable = [
         'name',
+        'amount',
     ];
 }
