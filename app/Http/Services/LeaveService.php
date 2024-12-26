@@ -39,21 +39,21 @@ class LeaveService
         $employeeLeaves = $this->employeeLeaveRepositoryInterface->getByEmployeeId($id);
 
         // Assume that the policy is already linked with the employee's leave types.
-        $annualLeavePolicy = $this->policyHasLeaveRepositoryInterface->getAmountByPolicyIdAndType($id, 1);
-        $casualLeavePolicy = $this->policyHasLeaveRepositoryInterface->getAmountByPolicyIdAndType($id, 2);
+        $casualLeavePolicy = $this->policyHasLeaveRepositoryInterface->getAmountByPolicyIdAndType($id, 1);
+        $annualLeavePolicy = $this->policyHasLeaveRepositoryInterface->getAmountByPolicyIdAndType($id, 2);
 
         // Calculate the total taken annual and casual leaves
-        $totalAnnualLeavesTaken = $employeeLeaves->where('leave_type_id', 1)->count();
-        $totalCasualLeavesTaken = $employeeLeaves->where('leave_type_id', 2)->count();
+        $totalCasualLeavesTaken = $employeeLeaves->where('leave_type_id', 1)->count();
+        $totalAnnualLeavesTaken = $employeeLeaves->where('leave_type_id', 2)->count();
 
         // Calculate the remaining annual and casual leaves
-        $remainingAnnualLeaves = $annualLeavePolicy - $totalAnnualLeavesTaken;
         $remainingCasualLeaves = $casualLeavePolicy - $totalCasualLeavesTaken;
+        $remainingAnnualLeaves = $annualLeavePolicy - $totalAnnualLeavesTaken;
 
         return [
             'employee_id' => $id,
-            'remaining_annual_leaves' => max($remainingAnnualLeaves, 0),
             'remaining_casual_leaves' => max($remainingCasualLeaves, 0),
+            'remaining_annual_leaves' => max($remainingAnnualLeaves, 0),
         ];
     }
 }
