@@ -11,7 +11,6 @@ class EmployeeLeave extends Model
 
     protected $fillable = [
         'employee_id',
-        'leave_type_id',
         'date',
     ];
 

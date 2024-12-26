@@ -12,10 +12,7 @@ class LeaveResource extends JsonResource
         return [
             'id' => $this->id,
             'employee_id' => $this->employee_id,
-            'taken_casual_leaves' => $this->taken_casual_leaves,
-            'taken_annual_leaves' => $this->taken_annual_leaves,
-            'remaining_casual_leaves' => $this->remaining_casual_leaves,
-            'remaining_annual_leaves' => $this->remaining_annual_leaves,
+            'date' => $this->date,
         ];
     }
 }

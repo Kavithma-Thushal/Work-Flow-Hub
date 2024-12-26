@@ -22,8 +22,7 @@ class LeaveRequest extends FormRequest
     {
         return [
             'employee_id' => 'required|exists:employees,id',
-            'annual_leaves' => 'required|numeric|min:0',
-            'casual_leaves' => 'required|numeric|min:0',
+            'date' => 'required|date|after_or_equal:today',
         ];
     }
 }

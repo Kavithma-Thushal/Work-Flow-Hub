@@ -18,11 +18,11 @@ class LeaveController extends Controller
         $this->leaveService = $leaveService;
     }
 
-    public function add(LeaveRequest $request)
+    public function store(LeaveRequest $request)
     {
         try {
-            $data = $this->leaveService->add($request->validated());
-            return new SuccessResource(['message' => 'EmployeeLeave Added Successfully!', 'data' => new LeaveResource($data)]);
+            $data = $this->leaveService->store($request->validated());
+            return new SuccessResource(['message' => 'Leave Stored Successfully!', 'data' => new LeaveResource($data)]);
         } catch (HttpException $e) {
             ErrorResponse::throwException($e);
         }
