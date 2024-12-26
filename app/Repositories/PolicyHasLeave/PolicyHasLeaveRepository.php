@@ -14,6 +14,7 @@ class PolicyHasLeaveRepository extends CrudRepository implements PolicyHasLeaveR
 
     public function getAmountByPolicyIdAndType(int $policyId, int $leaveTypeId)
     {
-        return PolicyHasLeave::where('leave_policy_id', $policyId)->where('leave_type_id', $leaveTypeId)->first();
+        $policyLeave = PolicyHasLeave::where('leave_policy_id', $policyId)->where('leave_type_id', $leaveTypeId)->first();
+        return $policyLeave ? $policyLeave->amount : 0;
     }
 }

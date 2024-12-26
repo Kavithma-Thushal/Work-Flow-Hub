@@ -32,7 +32,7 @@ class LeaveController extends Controller
     {
         try {
             $data = $this->leaveService->getByEmployeeId($id);
-            return new SuccessResource(['message' => 'Employee Leaves Retrieved Successfully!', 'data' => LeaveResource::collection($data)]);
+            return new SuccessResource(['message' => 'Employee Leaves Retrieved Successfully!', 'data' => $data]);
         } catch (HttpException $e) {
             ErrorResponse::throwException($e);
         }
