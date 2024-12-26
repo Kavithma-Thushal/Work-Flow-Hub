@@ -5,14 +5,14 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Leave extends Model
+class EmployeeLeave extends Model
 {
     use HasFactory;
 
     protected $fillable = [
         'employee_id',
-        'taken_casual_leaves',
-        'taken_annual_leaves',
+        'leave_type_id',
+        'date',
     ];
 
     public function employee()

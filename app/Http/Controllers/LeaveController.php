@@ -22,7 +22,7 @@ class LeaveController extends Controller
     {
         try {
             $data = $this->leaveService->add($request->validated());
-            return new SuccessResource(['message' => 'Leave Added Successfully!', 'data' => new LeaveResource($data)]);
+            return new SuccessResource(['message' => 'EmployeeLeave Added Successfully!', 'data' => new LeaveResource($data)]);
         } catch (HttpException $e) {
             ErrorResponse::throwException($e);
         }

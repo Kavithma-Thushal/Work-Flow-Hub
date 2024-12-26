@@ -33,10 +33,10 @@ class LeaveService
                 throw new HttpException(HttpStatus::NOT_FOUND, 'Employee not found.');
             }
 
-            // Is Leave Policy Available
+            // Is EmployeeLeave Policy Available
             $leavePolicy = $employee->leavePolicy;
             if (!$leavePolicy) {
-                throw new HttpException(HttpStatus::NOT_FOUND, 'Leave policy not found for this employee.');
+                throw new HttpException(HttpStatus::NOT_FOUND, 'EmployeeLeave policy not found for this employee.');
             }
 
             // Fetch the total leaves already taken by the employee
@@ -65,7 +65,7 @@ class LeaveService
             return $leave;
         } catch (Exception $e) {
             DB::rollBack();
-            throw new HttpException(HttpStatus::INTERNAL_SERVER_ERROR, 'Leave save failed: ' . $e->getMessage());
+            throw new HttpException(HttpStatus::INTERNAL_SERVER_ERROR, 'EmployeeLeave save failed: ' . $e->getMessage());
         }
     }
 
@@ -80,7 +80,7 @@ class LeaveService
         // Fetch the employee's leave policy
         $employee = $this->employeeRepositoryInterface->getById($id);
         if (!$employee || !$employee->leavePolicy) {
-            throw new HttpException(HttpStatus::NOT_FOUND, 'Leave policy not found for this employee');
+            throw new HttpException(HttpStatus::NOT_FOUND, 'EmployeeLeave policy not found for this employee');
         }
 
         // Calculate the total taken casual and annual leaves
