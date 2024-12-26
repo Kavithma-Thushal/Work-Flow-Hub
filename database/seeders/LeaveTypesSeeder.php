@@ -16,13 +16,11 @@ class LeaveTypesSeeder extends Seeder
         $types = [
             [
                 'name' => 'Casual',
-                'amount' => '10',
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
             [
                 'name' => 'Annual',
-                'amount' => '20',
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
@@ -31,7 +29,6 @@ class LeaveTypesSeeder extends Seeder
         foreach ($types as $type) {
             LeaveType::updateOrCreate(
                 ['name' => $type['name']],
-                ['amount' => $type['amount']],
                 [
                     'created_at' => $type['created_at'],
                     'updated_at' => $type['updated_at'],
