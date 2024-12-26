@@ -15,6 +15,7 @@ class DatabaseSeeder extends Seeder
             RolePermissionSeeder::class,
             LeavePoliciesSeeder::class,
             LeaveTypesSeeder::class,
+            PolicyHasLeavesSeeder::class,
         ]);
     }
 }
