@@ -8,8 +8,6 @@ use App\Repositories\Employee\EmployeeRepository;
 use App\Repositories\Employee\EmployeeRepositoryInterface;
 use App\Repositories\EmployeeLeave\EmployeeLeaveRepository;
 use App\Repositories\EmployeeLeave\EmployeeLeaveRepositoryInterface;
-use App\Repositories\LeavePolicy\LeavePolicyRepository;
-use App\Repositories\LeavePolicy\LeavePolicyRepositoryInterface;
 use App\Repositories\User\UserRepository;
 use App\Repositories\User\UserRepositoryInterface;
 use Illuminate\Support\ServiceProvider;
@@ -25,7 +23,6 @@ class RepositoryServiceProvider extends ServiceProvider
         $this->app->bind(CompanyRepositoryInterface::class, CompanyRepository::class);
         $this->app->bind(EmployeeRepositoryInterface::class, EmployeeRepository::class);
         $this->app->bind(EmployeeLeaveRepositoryInterface::class, EmployeeLeaveRepository::class);
-        $this->app->bind(LeavePolicyRepositoryInterface::class, LeavePolicyRepository::class);
     }
 
     /**

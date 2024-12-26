@@ -14,13 +14,11 @@ use Symfony\Component\HttpKernel\Exception\HttpException;
 class LeaveService
 {
     protected EmployeeRepositoryInterface $employeeRepositoryInterface;
-    protected LeavePolicyRepositoryInterface $leavePolicyRepositoryInterface;
     protected EmployeeLeaveRepositoryInterface $employeeLeaveRepositoryInterface;
 
-    public function __construct(EmployeeRepositoryInterface $employeeRepositoryInterface, LeavePolicyRepositoryInterface $leavePolicyRepositoryInterface, EmployeeLeaveRepositoryInterface $leaveRepositoryInterface)
+    public function __construct(EmployeeRepositoryInterface $employeeRepositoryInterface, EmployeeLeaveRepositoryInterface $leaveRepositoryInterface)
     {
         $this->employeeRepositoryInterface = $employeeRepositoryInterface;
-        $this->leavePolicyRepositoryInterface = $leavePolicyRepositoryInterface;
         $this->employeeLeaveRepositoryInterface = $leaveRepositoryInterface;
     }
 

@@ -15,13 +15,11 @@ class EmployeeService
 {
     protected EmployeeRepositoryInterface $employeeRepositoryInterface;
     protected EmployeeLeaveRepositoryInterface $leaveRepositoryInterface;
-    protected LeavePolicyRepositoryInterface $leavePolicyRepositoryInterface;
 
-    public function __construct(EmployeeRepositoryInterface $employeeRepositoryInterface, EmployeeLeaveRepositoryInterface $leaveRepositoryInterface, LeavePolicyRepositoryInterface $leavePolicyRepositoryInterface)
+    public function __construct(EmployeeRepositoryInterface $employeeRepositoryInterface, EmployeeLeaveRepositoryInterface $leaveRepositoryInterface)
     {
         $this->employeeRepositoryInterface = $employeeRepositoryInterface;
         $this->leaveRepositoryInterface = $leaveRepositoryInterface;
-        $this->leavePolicyRepositoryInterface = $leavePolicyRepositoryInterface;
     }
 
     public function store(array $data)
