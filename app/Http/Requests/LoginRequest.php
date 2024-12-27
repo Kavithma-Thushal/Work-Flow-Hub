@@ -3,7 +3,6 @@
 namespace App\Http\Requests;
 
 use App\Classes\ErrorResponse;
-use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Contracts\Validation\Validator;
 
