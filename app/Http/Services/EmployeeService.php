@@ -47,6 +47,7 @@ class EmployeeService
                 'name' => $data['name'] ?? null,
                 'address' => $data['address'] ?? null,
                 'salary' => $data['salary'] ?? null,
+                'leave_policy_id' => $data['leave_policy_id'] ?? null,
             ]);
 
             if (!$employee) {
