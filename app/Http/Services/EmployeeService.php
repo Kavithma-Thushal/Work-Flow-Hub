@@ -2,7 +2,6 @@
 
 namespace App\Http\Services;
 
-use App\Repositories\EmployeeLeave\EmployeeLeaveRepositoryInterface;
 use Exception;
 use App\Enums\HttpStatus;
 use App\Repositories\Employee\EmployeeRepositoryInterface;
@@ -13,12 +12,10 @@ use Symfony\Component\HttpKernel\Exception\HttpException;
 class EmployeeService
 {
     protected EmployeeRepositoryInterface $employeeRepositoryInterface;
-    protected EmployeeLeaveRepositoryInterface $leaveRepositoryInterface;
 
-    public function __construct(EmployeeRepositoryInterface $employeeRepositoryInterface, EmployeeLeaveRepositoryInterface $leaveRepositoryInterface)
+    public function __construct(EmployeeRepositoryInterface $employeeRepositoryInterface)
     {
         $this->employeeRepositoryInterface = $employeeRepositoryInterface;
-        $this->leaveRepositoryInterface = $leaveRepositoryInterface;
     }
 
     public function store(array $data)
