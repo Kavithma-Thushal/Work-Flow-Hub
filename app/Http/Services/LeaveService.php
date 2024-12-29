@@ -2,6 +2,7 @@
 
 namespace App\Http\Services;
 
+use App\Repositories\Employee\EmployeeRepositoryInterface;
 use App\Repositories\EmployeeLeave\EmployeeLeaveRepositoryInterface;
 use App\Repositories\PolicyHasLeave\PolicyHasLeaveRepositoryInterface;
 use Exception;
@@ -11,11 +12,13 @@ use Symfony\Component\HttpKernel\Exception\HttpException;
 
 class LeaveService
 {
+    protected EmployeeRepositoryInterface $employeeRepositoryInterface;
     protected EmployeeLeaveRepositoryInterface $employeeLeaveRepositoryInterface;
     protected PolicyHasLeaveRepositoryInterface $policyHasLeaveRepositoryInterface;
 
-    public function __construct(EmployeeLeaveRepositoryInterface $leaveRepositoryInterface, PolicyHasLeaveRepositoryInterface $policyHasLeaveRepositoryInterface)
+    public function __construct(EmployeeRepositoryInterface $employeeRepositoryInterface, EmployeeLeaveRepositoryInterface $leaveRepositoryInterface, PolicyHasLeaveRepositoryInterface $policyHasLeaveRepositoryInterface)
     {
+        $this->employeeRepositoryInterface = $employeeRepositoryInterface;
         $this->employeeLeaveRepositoryInterface = $leaveRepositoryInterface;
         $this->policyHasLeaveRepositoryInterface = $policyHasLeaveRepositoryInterface;
     }
@@ -35,18 +38,37 @@ class LeaveService
 
     public function getByEmployeeId(int $id)
     {
+        // Retrieve employee record
+        $employee = $this->employeeRepositoryInterface->getById($id);
+
+        if (!$employee) {
+            throw new HttpException(HttpStatus::NOT_FOUND, 'Employee not found');
+        }
+
         // Retrieve all leave records for the employee
         $employeeLeaves = $this->employeeLeaveRepositoryInterface->getByEmployeeId($id);
 
-        // Assume that the policy is already linked with the employee's leave types.
-        $casualLeavePolicy = $this->policyHasLeaveRepositoryInterface->getAmountByPolicyIdAndType($id, 1);
-        $annualLeavePolicy = $this->policyHasLeaveRepositoryInterface->getAmountByPolicyIdAndType($id, 2);
+        if ($employeeLeaves->isEmpty()) {
+            // If no leaves are recorded, get policy amounts directly
+            $casualLeavePolicy = $this->policyHasLeaveRepositoryInterface->getAmountByPolicyIdAndType($employee->leave_policy_id, 1);
+            $annualLeavePolicy = $this->policyHasLeaveRepositoryInterface->getAmountByPolicyIdAndType($employee->leave_policy_id, 2);
 
-        // Calculate the total taken annual and casual leaves
+            return [
+                'employee_id' => $id,
+                'remaining_casual_leaves' => $casualLeavePolicy,
+                'remaining_annual_leaves' => $annualLeavePolicy,
+            ];
+        }
+
+        // Calculate leave usage based on recorded leaves
         $totalCasualLeavesTaken = $employeeLeaves->where('leave_type_id', 1)->count();
         $totalAnnualLeavesTaken = $employeeLeaves->where('leave_type_id', 2)->count();
 
-        // Calculate the remaining annual and casual leaves
+        // Retrieve policy amounts
+        $casualLeavePolicy = $this->policyHasLeaveRepositoryInterface->getAmountByPolicyIdAndType($employee->leave_policy_id, 1);
+        $annualLeavePolicy = $this->policyHasLeaveRepositoryInterface->getAmountByPolicyIdAndType($employee->leave_policy_id, 2);
+
+        // Calculate the remaining leaves
         $remainingCasualLeaves = $casualLeavePolicy - $totalCasualLeavesTaken;
         $remainingAnnualLeaves = $annualLeavePolicy - $totalAnnualLeavesTaken;
 
