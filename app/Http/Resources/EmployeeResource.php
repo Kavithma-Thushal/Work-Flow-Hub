@@ -11,10 +11,11 @@ class EmployeeResource extends JsonResource
     {
         return [
             'id' => $this->id,
+            'company_id' => $this->company_id,
+            'leave_policy_id' => $this->leave_policy_id,
             'name' => $this->name,
             'address' => $this->address,
             'salary' => $this->salary,
-            'leave_policy_id' => $this->leave_policy_id,
         ];
     }
 }
