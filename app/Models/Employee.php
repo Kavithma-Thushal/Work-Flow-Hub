@@ -33,7 +33,7 @@ class Employee extends Model
         return $this->belongsTo(LeavePolicy::class);
     }
 
-    public function leaves()
+    public function employeeLeave()
     {
         return $this->hasMany(EmployeeLeave::class);
     }

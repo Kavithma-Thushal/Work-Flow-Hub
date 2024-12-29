@@ -18,13 +18,13 @@ class User extends Authenticatable
         'password',
     ];
 
-    public function employee()
-    {
-        return $this->hasOne(Employee::class);
-    }
-
     public function company()
     {
         return $this->hasOne(Company::class);
+    }
+
+    public function employee()
+    {
+        return $this->hasOne(Employee::class);
     }
 }

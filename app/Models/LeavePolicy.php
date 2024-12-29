@@ -13,12 +13,12 @@ class LeavePolicy extends Model
         'name',
     ];
 
-    public function employees()
+    public function employee()
     {
         return $this->hasMany(Employee::class);
     }
 
-    public function policyHasLeaves()
+    public function policyHasLeave()
     {
         return $this->hasMany(PolicyHasLeave::class);
     }

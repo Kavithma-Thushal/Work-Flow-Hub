@@ -12,4 +12,14 @@ class LeaveType extends Model
     protected $fillable = [
         'name',
     ];
+
+    public function employeeLeave()
+    {
+        return $this->hasMany(EmployeeLeave::class);
+    }
+
+    public function policyHasLeave()
+    {
+        return $this->hasMany(PolicyHasLeave::class);
+    }
 }
