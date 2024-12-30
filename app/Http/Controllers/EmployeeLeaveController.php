@@ -3,26 +3,26 @@
 namespace App\Http\Controllers;
 
 use App\Classes\ErrorResponse;
-use App\Http\Requests\LeaveRequest;
-use App\Http\Resources\LeaveResource;
+use App\Http\Requests\EmployeeLeaveRequest;
+use App\Http\Resources\EmployeeLeaveResource;
 use App\Http\Resources\SuccessResource;
-use App\Http\Services\LeaveService;
+use App\Http\Services\EmployeeLeaveService;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 
-class LeaveController extends Controller
+class EmployeeLeaveController extends Controller
 {
-    private LeaveService $leaveService;
+    private EmployeeLeaveService $leaveService;
 
-    public function __construct(LeaveService $leaveService)
+    public function __construct(EmployeeLeaveService $leaveService)
     {
         $this->leaveService = $leaveService;
     }
 
-    public function store(LeaveRequest $request)
+    public function store(EmployeeLeaveRequest $request)
     {
         try {
             $data = $this->leaveService->store($request->validated());
-            return new SuccessResource(['message' => 'Leave Stored Successfully!', 'data' => new LeaveResource($data)]);
+            return new SuccessResource(['message' => 'Leave Stored Successfully!', 'data' => new EmployeeLeaveResource($data)]);
         } catch (HttpException $e) {
             ErrorResponse::throwException($e);
         }

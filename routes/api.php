@@ -2,7 +2,7 @@
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\EmployeeController;
-use App\Http\Controllers\LeaveController;
+use App\Http\Controllers\EmployeeLeaveController;
 use Illuminate\Support\Facades\Route;
 
 Route::prefix('v1')->group(function () {
@@ -19,8 +19,8 @@ Route::prefix('v1')->group(function () {
         });
 
         Route::prefix('leave')->group(function () {
-            Route::post('store', [LeaveController::class, 'store'])->middleware('permissions:leave-store');
-            Route::get('getById/{id}', [LeaveController::class, 'getById'])->middleware('permissions:leave-getById');
+            Route::post('store', [EmployeeLeaveController::class, 'store'])->middleware('permissions:leave-store');
+            Route::get('getById/{id}', [EmployeeLeaveController::class, 'getById'])->middleware('permissions:leave-getById');
         });
     });
 });

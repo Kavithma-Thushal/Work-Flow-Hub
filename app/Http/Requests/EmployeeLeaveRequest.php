@@ -6,7 +6,7 @@ use App\Classes\ErrorResponse;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Contracts\Validation\Validator;
 
-class LeaveRequest extends FormRequest
+class EmployeeLeaveRequest extends FormRequest
 {
     protected function failedValidation(Validator $validator)
     {

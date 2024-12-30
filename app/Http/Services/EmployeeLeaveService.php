@@ -10,7 +10,7 @@ use App\Enums\HttpStatus;
 use Illuminate\Support\Facades\DB;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 
-class LeaveService
+class EmployeeLeaveService
 {
     protected EmployeeRepositoryInterface $employeeRepositoryInterface;
     protected EmployeeLeaveRepositoryInterface $employeeLeaveRepositoryInterface;
