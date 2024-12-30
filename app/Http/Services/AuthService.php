@@ -31,7 +31,7 @@ class AuthService
                 'password' => Hash::make($data['password']),
             ]);
 
-            $user->assignRole('company');
+            $user->assignRole('Company');
 
             $this->companyRepositoryInterface->store([
                 'user_id' => $user->id,
