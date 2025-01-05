@@ -14,6 +14,6 @@ class EmployeeLeaveRepository extends CrudRepository implements EmployeeLeaveRep
 
     public function getByEmployeeId(int $id)
     {
-        return EmployeeLeave::where('employee_id', $id)->get();
+        return $this->model->where('employee_id', $id)->get();
     }
 }

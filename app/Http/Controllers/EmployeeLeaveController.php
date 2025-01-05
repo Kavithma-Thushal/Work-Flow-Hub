@@ -22,7 +22,10 @@ class EmployeeLeaveController extends Controller
     {
         try {
             $data = $this->leaveService->store($request->validated());
-            return new SuccessResource(['message' => 'Leave Stored Successfully!', 'data' => new EmployeeLeaveResource($data)]);
+            return new SuccessResource([
+                'message' => 'Leave Stored Successfully!',
+                'leave' => new EmployeeLeaveResource($data)
+            ]);
         } catch (HttpException $e) {
             ErrorResponse::throwException($e);
         }
@@ -31,8 +34,24 @@ class EmployeeLeaveController extends Controller
     public function getById(int $id)
     {
         try {
-            $data = $this->leaveService->getByEmployeeId($id);
-            return new SuccessResource(['message' => 'Employee Leaves Retrieved Successfully!', 'data' => $data]);
+            $data = $this->leaveService->getById($id);
+            return new SuccessResource([
+                'message' => 'Employee Leaves Retrieved Successfully!',
+                'leave' => $data
+            ]);
+        } catch (HttpException $e) {
+            ErrorResponse::throwException($e);
+        }
+    }
+
+    public function getAll()
+    {
+        try {
+            $data = $this->leaveService->getAll();
+            return new SuccessResource([
+                'message' => 'Employee Leave Data Retrieved Successfully!',
+                'leave' => $data
+            ]);
         } catch (HttpException $e) {
             ErrorResponse::throwException($e);
         }

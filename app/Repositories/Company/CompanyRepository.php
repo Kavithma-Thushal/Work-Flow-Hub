@@ -11,4 +11,9 @@ class CompanyRepository extends CrudRepository implements CompanyRepositoryInter
     {
         parent::__construct($model);
     }
+
+    public function getByUserId($userId)
+    {
+        return $this->model->where('user_id', $userId)->first();
+    }
 }

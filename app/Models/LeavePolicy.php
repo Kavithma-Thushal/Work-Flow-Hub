@@ -18,8 +18,8 @@ class LeavePolicy extends Model
         return $this->hasMany(Employee::class);
     }
 
-    public function policyHasLeave()
+    public function policyHasType()
     {
-        return $this->hasMany(PolicyHasLeave::class);
+        return $this->hasMany(PolicyHasType::class);
     }
 }

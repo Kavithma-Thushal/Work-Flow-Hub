@@ -6,5 +6,5 @@ use App\Repositories\CrudRepositoryInterface;
 
 interface PolicyHasLeaveRepositoryInterface extends CrudRepositoryInterface
 {
-    public function getAmountByPolicyIdAndType(int $policyId, int $leaveTypeId);
+    public function getAmountByPolicyAndType(int $policyId, int $leaveTypeId);
 }

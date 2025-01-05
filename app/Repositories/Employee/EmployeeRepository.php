@@ -11,4 +11,14 @@ class EmployeeRepository extends CrudRepository implements EmployeeRepositoryInt
     {
         parent::__construct($model);
     }
+
+    public function getByUserId(int $userId)
+    {
+        return $this->model->where('user_id', $userId)->first();
+    }
+
+    public function getByCompanyId(int $companyId)
+    {
+        return $this->model->where('company_id', $companyId)->get();
+    }
 }

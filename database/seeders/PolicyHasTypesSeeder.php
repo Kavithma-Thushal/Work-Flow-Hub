@@ -4,10 +4,10 @@ namespace Database\Seeders;
 
 use App\Models\LeavePolicy;
 use App\Models\LeaveType;
-use App\Models\PolicyHasLeave;
+use App\Models\PolicyHasType;
 use Illuminate\Database\Seeder;
 
-class PolicyHasLeavesSeeder extends Seeder
+class PolicyHasTypesSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -53,7 +53,7 @@ class PolicyHasLeavesSeeder extends Seeder
         ];
 
         foreach ($policyLeaves as $policyLeave) {
-            PolicyHasLeave::updateOrCreate(
+            PolicyHasType::updateOrCreate(
                 [
                     'leave_policy_id' => $policyLeave['leave_policy_id'],
                     'leave_type_id' => $policyLeave['leave_type_id'],

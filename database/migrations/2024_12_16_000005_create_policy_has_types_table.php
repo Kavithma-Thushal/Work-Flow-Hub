@@ -10,7 +10,7 @@ return new class extends Migration {
      */
     public function up(): void
     {
-        Schema::create('policy_has_leaves', function (Blueprint $table) {
+        Schema::create('policy_has_types', function (Blueprint $table) {
             $table->id();
             $table->foreignId('leave_policy_id')->constrained('leave_policies')->onDelete('cascade');
             $table->foreignId('leave_type_id')->constrained('leave_types')->onDelete('cascade');
@@ -24,6 +24,6 @@ return new class extends Migration {
      */
     public function down(): void
     {
-        Schema::dropIfExists('policy_has_leaves');
+        Schema::dropIfExists('policy_has_types');
     }
 };

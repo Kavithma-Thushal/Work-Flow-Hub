@@ -33,7 +33,7 @@ class AuthService
 
             $user->assignRole('Company');
 
-            $this->companyRepositoryInterface->store([
+            $company = $this->companyRepositoryInterface->store([
                 'user_id' => $user->id,
                 'registration_no' => $data['registration_no'],
                 'address' => $data['address'],
@@ -41,7 +41,7 @@ class AuthService
             ]);
 
             DB::commit();
-            return $user;
+            return ['user' => $user, 'company' => $company];
         } catch (Exception $e) {
             DB::rollBack();
             throw new HttpException(HttpStatus::INTERNAL_SERVER_ERROR, 'User registration failed: ' . $e->getMessage());

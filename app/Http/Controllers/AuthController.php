@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Classes\ErrorResponse;
 use App\Http\Requests\LoginRequest;
 use App\Http\Requests\RegisterRequest;
+use App\Http\Resources\CompanyResource;
 use App\Http\Resources\LoginResource;
 use App\Http\Resources\SuccessResource;
 use App\Http\Resources\UserResource;
@@ -24,7 +25,11 @@ class AuthController extends Controller
     {
         try {
             $data = $this->authService->register($request->validated());
-            return new SuccessResource(['message' => 'User Registered Successfully!', 'data' => new UserResource($data)]);
+            return new SuccessResource([
+                'message' => 'Company Registered Successfully!',
+                'user' => new UserResource($data['user']),
+                'company' => new CompanyResource($data['company']),
+            ]);
         } catch (HttpException $e) {
             ErrorResponse::throwException($e);
         }
@@ -34,7 +39,10 @@ class AuthController extends Controller
     {
         try {
             $data = $this->authService->login($request->validated());
-            return new SuccessResource(['message' => 'User Logged in Successfully!', 'data' => new LoginResource($data)]);
+            return new SuccessResource([
+                'message' => 'User Logged in Successfully!',
+                'data' => new LoginResource((object)$data)
+            ]);
         } catch (HttpException $e) {
             ErrorResponse::throwException($e);
         }

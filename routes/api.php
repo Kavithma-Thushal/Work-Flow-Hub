@@ -20,7 +20,9 @@ Route::prefix('v1')->group(function () {
 
         Route::prefix('leave')->group(function () {
             Route::post('store', [EmployeeLeaveController::class, 'store'])->middleware('permissions:leave-store');
-            Route::get('getById/{id}', [EmployeeLeaveController::class, 'getById'])->middleware('permissions:leave-getById');
+            Route::get('getById/{id}', [EmployeeLeaveController::class, 'getById'])->middleware('permissions:leave-getById');   // For Company
+            Route::get('getAll', [EmployeeLeaveController::class, 'getAll'])->middleware('permissions:leave-getAll');           // For Employee
         });
     });
+
 });

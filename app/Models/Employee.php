@@ -13,7 +13,6 @@ class Employee extends Model
         'user_id',
         'company_id',
         'leave_policy_id',
-        'name',
         'address',
         'salary',
     ];

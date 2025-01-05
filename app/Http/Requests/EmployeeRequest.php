@@ -22,6 +22,8 @@ class EmployeeRequest extends FormRequest
     {
         return [
             'name' => 'required|string|max:255',
+            'email' => 'required|email|unique:users,email',
+            'password' => 'required|string|min:6|confirmed',
             'address' => 'required|string|max:500',
             'salary' => 'required|numeric|min:0',
             'leave_policy_id' => 'required|exists:leave_policies,id',
